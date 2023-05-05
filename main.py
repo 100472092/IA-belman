@@ -62,14 +62,17 @@ def it_belman(estados: list, tolerancia: float):
     control = True
     for i in range((25 - 16) * 2 + 1):
         #print(i)
-        Vestados[i/2 + 16] = min(C_ENCENDER +
-                                     estados[i].encender["up0.5"] * Vestados_anterior[i/2 + 16 + 0.5] +
-                                     estados[i].encender["up1"] * Vestados_anterior[i/2 + 16 + 1] +
-                                     estados[i].encender["s"] * Vestados_anterior[i/2 + 16],
-                                     C_APAGAR +
-                                     estados[i].apagar["down"] * Vestados_anterior[i/2 + 16 - 0.5] +
-                                     estados[i].apagar["s"] * Vestados_anterior[i/2 + 16]
-                                    )
+        if (i/2 +16) == 22.0:
+            Vestados[i/2 + 16] = 0
+        else:
+            Vestados[i/2 + 16] = min(C_ENCENDER +
+                                         estados[i].encender["up0.5"] * Vestados_anterior[i/2 + 16 + 0.5] +
+                                         estados[i].encender["up1"] * Vestados_anterior[i/2 + 16 + 1] +
+                                         estados[i].encender["s"] * Vestados_anterior[i/2 + 16],
+                                         C_APAGAR +
+                                         estados[i].apagar["down"] * Vestados_anterior[i/2 + 16 - 0.5] +
+                                         estados[i].apagar["s"] * Vestados_anterior[i/2 + 16]
+                                        )
     for i in range((25 - 16) * 2 + 1):
         if Vestados[i/2 + 16] - Vestados_anterior[i/2 + 16] > tolerancia:
             control = False
