@@ -59,6 +59,7 @@ def main():
         print("v_estados: ", v_estados)
         print("v_prev_estados: ", v_prev_estados)
 
+    print("***====================***")
     print("Política óptima:")
     for i in range((25 - 16) * 2 + 1):
         # print(i)
@@ -72,7 +73,7 @@ def main():
             print(i / 2 + 16, " : ", "on")
         else:
             print(i / 2 + 16, " : ", "off")
-
+    print("***====================***")
 
 if __name__ == "__main__":
     main()
