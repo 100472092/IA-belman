@@ -10,6 +10,7 @@ P_ENCENDER_25 = {"s": 0.9, "up1": 0, "up0.5": 0, "down": 0.1}
 P_APAGAR_25 = {"s": 0.3, "up": 0, "down": 0.7}
 P_ENCENDER_24 = {"s": 0.2, "up1": 0, "up0.5": 0.7, "down": 0.1}
 TOLERANCIA = 0.00001
+MAX_IT = 1000
 
 class Estado():
     def __init__(self, temp):
@@ -84,7 +85,7 @@ def final_check(estados):
 
 it = 0
 parada = False
-while not parada:
+while not parada or (it != MAX_IT):
     parada = it_belman(estados, TOLERANCIA)
     print(it)
     it += 1
