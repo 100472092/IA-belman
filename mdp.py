@@ -1,6 +1,4 @@
 import json
-
-
 def init():
     """reads the input file and return relevant values"""
     try:
@@ -11,8 +9,8 @@ def init():
     return data["final"], data["p_on"], data["p_off"], data["max_it"], data["tolerance"], data["coste_on"], data[
         "coste_off"]
 
-
 def v_states_init(states: dict):
+    """inicialize a dictionary"""
     for i in range((25 - 16) * 2 + 1):
         states[str(i / 2 + 16)] = 0
     states["25.5"] = 0
@@ -22,6 +20,7 @@ def v_states_init(states: dict):
 
 def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off: float, p_on: dict, p_off: dict,
               tolerancia: float):
+    """one belman iteration for a set of given states"""
     control = True
     for i in range((25 - 16) * 2 + 1):
         # print(i)
