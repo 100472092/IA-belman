@@ -44,6 +44,6 @@
   },
   "max_it": 1000,
   "tolerance": 0.001,
-  "coste_on": 10,
-  "coste_off": 6
+  "coste_on": 5,
+  "coste_off": 1
 }
