@@ -1,7 +1,7 @@
 # CONSTANTES
 
 C_ENCENDER = 10
-C_APAGAR = 5
+C_APAGAR = 6
 P_ENCENDER = {"s": 0.1, "up1": 0.2, "up0.5": 0.5, "down": 0.1}
 P_APAGAR = {"s": 0.2, "up": 0.1, "down": 0.7}
 P_ENCENDER_16 = {"s": 0.3, "up1": 0.2, "up0.5": 0.5, "down": 0}
@@ -9,7 +9,7 @@ P_APAGAR_16 = {"s": 0.9, "up": 0.1, "down": 0}
 P_ENCENDER_25 = {"s": 0.9, "up1": 0, "up0.5": 0, "down": 0.1}
 P_APAGAR_25 = {"s": 0.3, "up": 0, "down": 0.7}
 P_ENCENDER_24 = {"s": 0.2, "up1": 0, "up0.5": 0.7, "down": 0.1}
-TOLERANCIA = 0.00001
+TOLERANCIA = 0.001
 MAX_IT = 1000
 
 class Estado():

@@ -9,7 +9,7 @@ def init():
     except FileNotFoundError as exc:
         raise "File Not Found" from exc
     return data["final"], data["p_on"], data["p_off"], data["max_it"], data["tolerance"], data["coste_on"], data[
-        "coste_off"]
+        "coste_off"], data["final_state"]
 
 
 def v_states_init(states: dict):
@@ -22,12 +22,12 @@ def v_states_init(states: dict):
 
 
 def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off: float, p_on: dict, p_off: dict,
-              tolerancia: float):
+              tolerancia: float, final_state: float):
     """one belman iteration for a set of given states"""
     control = True
     for i in range((25 - 16) * 2 + 1):
         # print(i)
-        if (i / 2 + 16) == 22.0:
+        if (i / 2 + 16) == final_state:
             v_estados[str(i / 2 + 16)] = 0
         else:
 
@@ -49,7 +49,7 @@ def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off:
 
 
 def main():
-    FINAL, P_ON, P_OFF, MAX_IT, TOLERANCE, COSTE_ON, COSTE_OFF = init()
+    FINAL, P_ON, P_OFF, MAX_IT, TOLERANCE, COSTE_ON, COSTE_OFF, FINAL_STATE = init()
     stop = False
     v_prev_estados = {}
     v_estados = {}
@@ -59,7 +59,7 @@ def main():
 
     it = 0
     while (not stop) and (it < MAX_IT):
-        stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE)
+        stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE, FINAL_STATE)
         print(it)
         it += 1
         print("v_estados: ", v_estados)
