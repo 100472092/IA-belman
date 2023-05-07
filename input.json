@@ -45,6 +45,5 @@
   "max_it": 1000,
   "tolerance": 0.001,
   "coste_on": 5,
-  "coste_off": 1,
-  "final_state" : 22
+  "coste_off": 1
 }
