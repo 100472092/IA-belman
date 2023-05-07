@@ -22,7 +22,7 @@ def v_states_init(states: dict):
 
 
 def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off: float, p_on: dict, p_off: dict,
-              tolerancia: float):
+              tolerancia: float, final_state):
     """one belman iteration for a set of given states"""
     control = True
     for i in range((25 - 16) * 2 + 1):
@@ -59,7 +59,7 @@ def main():
 
     it = 0
     while (not stop) and (it < MAX_IT):
-        stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE)
+        stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE, FINAL)
         #print(it)
         it += 1
         #print("v_estados: ", v_estados)
