@@ -4,7 +4,7 @@ import json
 def init():
     """reads the input file and return relevant values"""
     try:
-        with open("input.json") as file:
+        with open("input-matrix.json") as file:
             data = json.load(file)
     except FileNotFoundError as exc:
         raise "File Not Found" from exc
@@ -30,17 +30,17 @@ def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off:
         if (i / 2 + 16) == 22.0:
             v_estados[str(i / 2 + 16)] = 0
         else:
+            encender = coste_on
+            apagar = coste_off
+            for p in p_on:
+                encender += p_on[str(i / 2 + 16)][p]*v_estados_prev[p]
+            #print("encender:", i/2 + 16, " | ", encender)
+            for p in p_off:
+                apagar += p_off[str(i / 2 + 16)][p]*v_estados_prev[p]
+            #print("apagar  :", i/2 + 16, " | ", apagar)
+            v_estados[str(i / 2 + 16)] = min(round(encender, 2), round(apagar, 2))
 
-            v_estados[str(i / 2 + 16)] = min(round(coste_on +
-                                             p_on[str(i / 2 + 16)]["up0.5"] * v_estados_prev[str(i / 2 + 16 + 0.5)] +
-                                             p_on[str(i / 2 + 16)]["up1"] * v_estados_prev[str(i / 2 + 16 + 1.0)] +
-                                             p_on[str(i / 2 + 16)]["s"] * v_estados_prev[str(i / 2 + 16)] +
-                                             p_on[str(i / 2 + 16)]["down"] * v_estados_prev[str(i / 2 + 16 - 0.5)], 2),
-                                             round(coste_off +
-                                             p_off[str(i / 2 + 16)]["down"] * v_estados_prev[str(i / 2 + 16 - 0.5)] +
-                                             p_off[str(i / 2 + 16)]["s"] * v_estados_prev[str(i / 2 + 16)] +
-                                             p_off[str(i / 2 + 16)]["up0.5"] * v_estados_prev[str(i / 2 + 16 + 0.5)], 2)
-                                             )
+
     for i in range((25 - 16) * 2 + 1):
         if v_estados[str(i / 2 + 16)] - v_estados_prev[str(i / 2 + 16)] > tolerancia:
             control = False
@@ -69,20 +69,18 @@ def main():
     print("Política óptima:")
     for i in range((25 - 16) * 2 + 1):
         # print(i)
-        encender = round(COSTE_ON + P_OFF[str(i / 2 + 16)]["up0.5"] * v_estados[str(i / 2 + 16 + 0.5)] + \
-                   P_ON[str(i / 2 + 16)]["up1"] * v_estados[str(i / 2 + 16 + 1.0)] + P_ON[str(i / 2 + 16)]["s"] * \
-                   v_estados[str(i / 2 + 16)] + P_ON[str(i / 2 + 16)]["down"] * v_estados[str(i / 2 + 16 - 0.5)], 2)
-        apagar = round(COSTE_OFF + P_OFF[str(i / 2 + 16)]["down"] * v_estados[str(i / 2 + 16 - 0.5)] + \
-                 P_OFF[str(i / 2 + 16)]["s"] * v_estados[str(i / 2 + 16)] + P_OFF[str(i / 2 + 16)]["up0.5"] * \
-                 v_estados[str(i / 2 + 16 + 0.5)], 2)
-
+        encender = COSTE_ON
+        apagar = COSTE_OFF
+        for p in P_ON:
+            encender += P_ON[str(i / 2 + 16)][p]*v_prev_estados[p]
+            apagar += P_OFF[str(i / 2 + 16)][p]*v_prev_estados[p]
+        encender, apagar = round(encender, 2), round(apagar, 2)
         if encender < apagar:
-            print(i / 2 + 16, " : ", "on")
+            print(i / 2 + 16, " : ", "on ", "coste:", encender)
         else:
-            print(i / 2 + 16, " : ", "off")
+            print(i / 2 + 16, " : ", "off", "coste:", apagar)
     print("***====================***")
     print("nº de iteraciones:", it)
-    print("costes: ", v_estados)
 
 
 if __name__ == "__main__":
