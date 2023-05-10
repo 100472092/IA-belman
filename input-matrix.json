@@ -803,7 +803,7 @@
     }
   },
   "max_it": 1000,
-  "tolerance": 0.001,
+  "tolerance": 0.00001,
   "coste_on": 5,
   "coste_off": 1
 }

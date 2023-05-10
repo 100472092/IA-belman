@@ -33,13 +33,12 @@ def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off:
             encender = coste_on
             apagar = coste_off
             for p in p_on:
-                encender += p_on[str(i / 2 + 16)][p]*v_estados_prev[p]
-            #print("encender:", i/2 + 16, " | ", encender)
+                encender += p_on[str(i / 2 + 16)][p] * v_estados_prev[p]
+            # print("encender:", i/2 + 16, " | ", encender)
             for p in p_off:
-                apagar += p_off[str(i / 2 + 16)][p]*v_estados_prev[p]
-            #print("apagar  :", i/2 + 16, " | ", apagar)
-            v_estados[str(i / 2 + 16)] = min(round(encender, 2), round(apagar, 2))
-
+                apagar += p_off[str(i / 2 + 16)][p] * v_estados_prev[p]
+            # print("apagar  :", i/2 + 16, " | ", apagar)
+            v_estados[str(i / 2 + 16)] = min(encender, apagar)
 
     for i in range((25 - 16) * 2 + 1):
         if v_estados[str(i / 2 + 16)] - v_estados_prev[str(i / 2 + 16)] > tolerancia:
@@ -60,10 +59,10 @@ def main():
     it = 0
     while (not stop) and (it < MAX_IT):
         stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE, FINAL)
-        #print(it)
+        # print(it)
         it += 1
-        #print("v_estados: ", v_estados)
-        #print("v_prev_estados: ", v_prev_estados)
+        # print("v_estados: ", v_estados)
+        # print("v_prev_estados: ", v_prev_estados)
 
     print("***====================***")
     print("Política óptima:")
@@ -72,8 +71,8 @@ def main():
         encender = COSTE_ON
         apagar = COSTE_OFF
         for p in P_ON:
-            encender += P_ON[str(i / 2 + 16)][p]*v_prev_estados[p]
-            apagar += P_OFF[str(i / 2 + 16)][p]*v_prev_estados[p]
+            encender += P_ON[str(i / 2 + 16)][p] * v_prev_estados[p]
+            apagar += P_OFF[str(i / 2 + 16)][p] * v_prev_estados[p]
         encender, apagar = round(encender, 2), round(apagar, 2)
         if encender < apagar:
             print(i / 2 + 16, " : ", "on ", "coste:", encender)
