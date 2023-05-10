@@ -1,5 +1,5 @@
 {
-  "final": 22,
+  "final": 22.0,
   "p_on": {
     "16.0": {
       "16.0": 0.3,
@@ -802,8 +802,8 @@
       "25.0": 0.3
     }
   },
-  "max_it": 1000,
-  "tolerance": 0.00001,
-  "coste_on": 5,
+  "max_it": 10000,
+  "tolerance": 1e-6,
+  "coste_on": 1000,
   "coste_off": 1
 }

@@ -16,9 +16,6 @@ def v_states_init(states: dict):
     """inicialize a dictionary"""
     for i in range((25 - 16) * 2 + 1):
         states[str(i / 2 + 16)] = 0
-    states["25.5"] = 0
-    states["26.0"] = 0
-    states["15.5"] = 0
 
 
 def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off: float, p_on: dict, p_off: dict,
@@ -27,17 +24,14 @@ def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off:
     control = True
     for i in range((25 - 16) * 2 + 1):
         # print(i)
-        if (i / 2 + 16) == 22.0:
+        if (i / 2 + 16) == final_state:
             v_estados[str(i / 2 + 16)] = 0
         else:
             encender = coste_on
             apagar = coste_off
             for p in p_on:
                 encender += p_on[str(i / 2 + 16)][p] * v_estados_prev[p]
-            # print("encender:", i/2 + 16, " | ", encender)
-            for p in p_off:
                 apagar += p_off[str(i / 2 + 16)][p] * v_estados_prev[p]
-            # print("apagar  :", i/2 + 16, " | ", apagar)
             v_estados[str(i / 2 + 16)] = min(encender, apagar)
 
     for i in range((25 - 16) * 2 + 1):
@@ -48,38 +42,42 @@ def belman_it(v_estados: dict, v_estados_prev: dict, coste_on: float, coste_off:
 
 
 def main():
-    FINAL, P_ON, P_OFF, MAX_IT, TOLERANCE, COSTE_ON, COSTE_OFF = init()
-    stop = False
-    v_prev_estados = {}
-    v_estados = {}
+    """Bloque principal: bucle y política óptima"""
+    FINAL, P_ON, P_OFF, MAX_IT, TOLERANCE, COSTE_ON, COSTE_OFF = init() # parámetros
+    stop = False # condición de parada
+    v_prev_estados = {} # valor de cada estado en la iteración i - 1
+    v_estados = {} # valor de cada estado en la iteración i
 
-    v_states_init(v_estados)
+    v_states_init(v_estados) # inicialización
     v_states_init(v_prev_estados)
 
     it = 0
     while (not stop) and (it < MAX_IT):
+        # iteración de belman
         stop = belman_it(v_estados, v_prev_estados, COSTE_ON, COSTE_OFF, P_ON, P_OFF, TOLERANCE, FINAL)
-        # print(it)
         it += 1
-        # print("v_estados: ", v_estados)
-        # print("v_prev_estados: ", v_prev_estados)
 
+    # Política óptima
     print("***====================***")
     print("Política óptima:")
     for i in range((25 - 16) * 2 + 1):
         # print(i)
-        encender = COSTE_ON
-        apagar = COSTE_OFF
-        for p in P_ON:
-            encender += P_ON[str(i / 2 + 16)][p] * v_prev_estados[p]
-            apagar += P_OFF[str(i / 2 + 16)][p] * v_prev_estados[p]
-        encender, apagar = round(encender, 2), round(apagar, 2)
-        if encender < apagar:
-            print(i / 2 + 16, " : ", "on ", "coste:", encender)
+        if (i / 2 + 16) == FINAL:
+            print(i / 2 + 16, " : ", "META", "coste:", 0)
         else:
-            print(i / 2 + 16, " : ", "off", "coste:", apagar)
+            encender = COSTE_ON
+            apagar = COSTE_OFF
+            for p in P_ON:
+                encender += P_ON[str(i / 2 + 16)][p] * v_prev_estados[p] # valor de cada estado
+                apagar += P_OFF[str(i / 2 + 16)][p] * v_prev_estados[p]
+            encender, apagar = round(encender, 2), round(apagar, 2)
+            if encender < apagar:
+                print(i / 2 + 16, " : ", "on ", "coste:", encender)
+            else:
+                print(i / 2 + 16, " : ", "off", "coste:", apagar)
     print("***====================***")
     print("nº de iteraciones:", it)
+    print("ESTABILIZADO: ", stop)
 
 
 if __name__ == "__main__":
