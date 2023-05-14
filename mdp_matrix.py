@@ -58,8 +58,16 @@ def main():
         it += 1
 
     # Política óptima
-    print("***====================***")
-    print("Política óptima:")
+    print("\n==========================\nDatos de ejecución:\n--------------------")
+    print("Meta: ", FINAL)
+    print("coste_on: ", COSTE_ON)
+    print("coste_off: ", COSTE_OFF)
+    print("toleracncia: ", TOLERANCE)
+    print("Max_iteraciones: ", MAX_IT)
+    print("nº de iteraciones:", it)
+    print("ESTABILIZADO: ", stop)
+    print("==========================")
+    print("Política óptima:\n--------------------")
     for i in range((25 - 16) * 2 + 1):
         # print(i)
         if (i / 2 + 16) == FINAL:
@@ -75,9 +83,8 @@ def main():
                 print(i / 2 + 16, " : ", "on ", "coste:", encender)
             else:
                 print(i / 2 + 16, " : ", "off", "coste:", apagar)
-    print("***====================***")
-    print("nº de iteraciones:", it)
-    print("ESTABILIZADO: ", stop)
+    print("==========================")
+
 
 
 if __name__ == "__main__":
