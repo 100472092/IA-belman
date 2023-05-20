@@ -1,6 +1,5 @@
 import json
 
-
 def init():
     """reads the input file and return relevant values"""
     try:
@@ -45,8 +44,8 @@ def main():
     """Bloque principal: bucle y política óptima"""
     FINAL, P_ON, P_OFF, MAX_IT, TOLERANCE, COSTE_ON, COSTE_OFF = init() # parámetros
     stop = False # condición de parada
-    v_prev_estados = {} # valor de cada estado en la iteración i - 1
-    v_estados = {} # valor de cada estado en la iteración i
+    v_prev_estados = {}  # valor de cada estado en la iteración i - 1
+    v_estados = {}  # valor de cada estado en la iteración i
 
     v_states_init(v_estados) # inicialización
     v_states_init(v_prev_estados)

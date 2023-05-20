@@ -2,7 +2,7 @@
   "final": 22.0,
     "max_it": 10000,
   "tolerance": 1e-6,
-  "coste_on": 10,
+  "coste_on": 100000000000000,
   "coste_off": 1,
   "p_on": {
     "16.0": {
